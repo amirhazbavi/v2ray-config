@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V2Ray کانفیگ مدیر</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .config-section {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-right: 4px solid #667eea;
+        }
+        
+        .config-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .config-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .copy-btn:hover {
+            background: #764ba2;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-right: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            color: #1565c0;
+            font-size: 14px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #764ba2;
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 V2Ray کانفیگ مدیر</h1>
+        <p class="subtitle">ساخت و مدیریت کانفیگ‌های V2Ray</p>
+        
+        <div class="info-box">
+            💡 برای استفاده از این کانفیگ‌ها، نیاز به نرم‌افزار V2Ray دارید. لطفاً از منابع معتبر دانلود کنید.
+        </div>
+        
+        <!-- VLESS Config -->
+        <div class="config-section">
+            <div class="config-title">📋 VLESS (Recommended)</div>
+            <div class="config-code">
+                <button class="copy-btn" onclick="copyToClipboard('vless-config')">کپی</button>
+                <pre id="vless-config">vless://[UUID]@[SERVER]:443?encryption=none&security=tls&sni=[DOMAIN]&type=ws&host=[DOMAIN]&path=/v2ray#V2Ray-VLESS</pre>
+            </div>
+        </div>
+        
+        <!-- VMess Config -->
+        <div class="config-section">
+            <div class="config-title">📋 VMess</div>
+            <div class="config-code">
+                <button class="copy-btn" onclick="copyToClipboard('vmess-config')">کپی</button>
+                <pre id="vmess-config">vmess://[BASE64_ENCODED_CONFIG]</pre>
+            </div>
+        </div>
+        
+        <!-- Trojan Config -->
+        <div class="config-section">
+            <div class="config-title">📋 Trojan</div>
+            <div class="config-code">
+                <button class="copy-btn" onclick="copyToClipboard('trojan-config')">کپی</button>
+                <pre id="trojan-config">trojan://[PASSWORD]@[SERVER]:443?security=tls&sni=[DOMAIN]&type=ws&host=[DOMAIN]&path=/trojan#Trojan-Config</pre>
+            </div>
+        </div>
+        
+        <!-- JSON Config -->
+        <div class="config-section">
+            <div class="config-title">📋 JSON Config</div>
+            <div class="config-code">
+                <button class="copy-btn" onclick="copyToClipboard('json-config')">کپی</button>
+                <pre id="json-config">{
+  "inbounds": [
+    {
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "[SERVER]",
+            "port": 443,
+            "users": [
+              {
+                "id": "[UUID]",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": "[DOMAIN]"
+          }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "[DOMAIN]"
+        }
+      }
+    }
+  ]
+}</pre>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            ⚙️ <strong>نکات مهم:</strong>
+            <br>
+            - جای‌نشان‌گرهای [UUID], [SERVER], [DOMAIN] را با مقادیر واقعی جایگزین کنید
+            <br>
+            - برای امنیت بیشتر، از TLS استفاده کنید
+            <br>
+            - این کانفیگ‌ها برای استفاده تست است
+        </div>
+        
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="downloadConfig()">📥 دانلود کانفیگ</button>
+            <button class="btn btn-secondary" onclick="generateUUID()">🔑 تولید UUID</button>
+            <button class="btn btn-secondary" onclick="openDocs()">📚 مستندات</button>
+        </div>
+        
+        <div class="footer">
+            <p>V2Ray Config Manager | GitHub: <a href="https://github.com/amirhazbavi/v2ray-config" target="_blank" style="color: #667eea; text-decoration: none;">amirhazbavi/v2ray-config</a></p>
+            <p>⚠️ فقط برای مقاصد آموزشی و قانونی استفاده کنید</p>
+        </div>
+    </div>
+    
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ کانفیگ کپی شد!');
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('✅ کانفیگ کپی شد!');
+            });
+        }
+        
+        function generateUUID() {
+            const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+            alert('🔑 UUID تولید شد:\n\n' + uuid);
+        }
+        
+        function downloadConfig() {
+            const config = `VLESS: ${document.getElementById('vless-config').textContent}\n\nVMess: ${document.getElementById('vmess-config').textContent}\n\nTrojan: ${document.getElementById('trojan-config').textContent}`;
+            const blob = new Blob([config], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'v2ray-config.txt';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+        
+        function openDocs() {
+            window.open('https://www.v2fly.org/', '_blank');
+        }
+    </script>
+</body>
+</html>
